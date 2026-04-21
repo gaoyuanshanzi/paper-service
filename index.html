@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balancer | Theological Paper Engine</title>
+    <meta name="description" content="AI 기반 기독교 신학 논문 자동 생성 플랫폼">
+    <!-- Premium Academics Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-overlay" class="glass-panel active">
+        <div class="login-box">
+            <h1 class="brand-title">Balancer</h1>
+            <p class="brand-subtitle">Theological Paper Engine (Admin Login)</p>
+            <form id="login-form">
+                <div class="input-wrapper">
+                    <input type="text" id="username" placeholder="Admin ID" required autocomplete="username">
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="primary-btn">Authenticate Signature</button>
+                <div id="login-error" class="error-msg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="app-container" class="hidden">
+        <header class="app-header glass-nav">
+            <div class="logo">
+                <span class="logo-icon">⚖️</span> Balancer
+            </div>
+            <div class="user-info">
+                <span>Authorized as: <strong class="gold-text">Samuel Hyun</strong></span>
+                <button id="logout-btn" class="ghost-btn">Logout</button>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <!-- Topic Input Section -->
+            <section class="topic-section">
+                <h2 class="section-title">Theological Formulation Engine</h2>
+                <p class="section-desc">Enter a theological subject. Balancer will conduct extensive exegesis, historical contextualization, and objective academic structuring to generate a 10-page verified manuscript.</p>
+                
+                <div class="input-group frosted-glass">
+                    <select id="language-select" class="lang-selector">
+                        <option value="ko">Korean</option>
+                        <option value="en">English</option>
+                    </select>
+                    <input type="text" id="topic-input" placeholder="e.g., The Concept of Justification in Pauline Epistles...">
+                    <button id="generate-btn" class="primary-btn">Generate Manuscript</button>
+                </div>
+            </section>
+
+            <!-- Agent Workflow Section -->
+            <section id="workflow-section" class="hidden">
+                <h3 class="workflow-title">Multi-Agent Processing Protocol</h3>
+                <div class="workflow-grid">
+                    <div class="agent-card" id="agent-exegesis">
+                        <div class="agent-header">
+                            <span class="status-indicator"></span>
+                            <h3>Exegesis Engine</h3>
+                        </div>
+                        <p class="agent-role">Biblical text analysis & hermeneutics</p>
+                        <div class="agent-logs">Pending authorization...</div>
+                    </div>
+                    <div class="agent-card" id="agent-history">
+                        <div class="agent-header">
+                            <span class="status-indicator"></span>
+                            <h3>Historical Contextualizer</h3>
+                        </div>
+                        <p class="agent-role">Tradition, councils, and patristics</p>
+                        <div class="agent-logs">Waiting for exegesis data...</div>
+                    </div>
+                    <div class="agent-card" id="agent-systematic">
+                        <div class="agent-header">
+                            <span class="status-indicator"></span>
+                            <h3>Systematic Formulator</h3>
+                        </div>
+                        <p class="agent-role">Dogmatics & objective coherence</p>
+                        <div class="agent-logs">Awaiting historical context...</div>
+                    </div>
+                    <div class="agent-card" id="agent-citation">
+                        <div class="agent-header">
+                            <span class="status-indicator"></span>
+                            <h3>Citation & Bibliography</h3>
+                        </div>
+                        <p class="agent-role">Cross-referencing & academic formatting</p>
+                        <div class="agent-logs">Waiting for final draft...</div>
+                    </div>
+                </div>
+                
+                <div class="progress-bar-container frosted-glass">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </section>
+
+            <!-- Final Report Output -->
+            <section id="result-section" class="hidden">
+                <div class="paper-toolbar frosted-glass">
+                    <div class="paper-meta">
+                        <span class="paper-title-disp">Manuscript Compiled Successfully</span>
+                        <span class="paper-stats">Format: A4 (Approx. 10 Pages) • Over 35 Citations</span>
+                    </div>
+                    <div class="toolbar-actions" style="display: flex; gap: 10px;">
+                        <button id="export-btn" class="primary-btn">Export Text</button>
+                        <button id="publish-btn" class="primary-btn gold-btn">Publish Document</button>
+                    </div>
+                </div>
+                
+                <!-- The 10-page long scroll container -->
+                <div class="paper-wrapper">
+                    <div class="paper-content" id="paper-content">
+                        <!-- Paper injected via JS -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,611 @@
+:root {
+    --bg-base: #0a0a0c;
+    --bg-surface: #14151a;
+    --bg-paper: #f8f9fa;
+    --text-primary: #e8e8ed;
+    --text-secondary: #9aa0a6;
+    --text-paper: #111111;
+    --gold: #d4af37;
+    --gold-glow: rgba(212, 175, 55, 0.4);
+    --gold-hover: #b8972e;
+    --border: rgba(212, 175, 55, 0.2);
+    --success: #34d399;
+    --warning: #fbbf24;
+    
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-title: 'Cinzel', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Background animated gradient */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05), transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(20, 21, 26, 0.8), transparent 50%);
+    z-index: -1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Utilities */
+.glass-panel {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 10, 12, 0.8);
+}
+
+.frosted-glass {
+    background: rgba(20, 21, 26, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Button & Inputs */
+.primary-btn {
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.primary-btn:hover {
+    background: var(--gold);
+    color: var(--bg-base);
+    box-shadow: 0 0 15px var(--gold-glow);
+}
+
+.gold-btn {
+    background: var(--gold);
+    color: var(--bg-base);
+}
+
+.gold-btn:hover {
+    background: var(--gold-hover);
+    color: var(--bg-base);
+}
+
+.ghost-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.9rem;
+}
+
+.ghost-btn:hover {
+    color: var(--gold);
+}
+
+.gold-text {
+    color: var(--gold);
+}
+
+/* Login Screen */
+#login-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#login-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.login-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 3rem 4rem;
+    width: 450px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
+    animation: floatIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-box::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+@keyframes floatIn {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.brand-title {
+    font-family: var(--font-title);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+}
+
+.brand-subtitle {
+    font-family: var(--font-serif);
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.input-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #0a0a0c;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: var(--font-sans);
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px var(--gold-glow);
+}
+
+.login-box button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.error-msg {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+    height: 1rem;
+}
+
+/* App Header */
+#app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.glass-nav {
+    background: rgba(10, 10, 12, 0.85);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-family: var(--font-title);
+    font-weight: 600;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--gold);
+}
+
+.user-info {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Dashboard Layout */
+.dashboard {
+    flex: 1;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 4rem 2rem;
+}
+
+/* Topic Section */
+.topic-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+    font-size: 1.1rem;
+}
+
+.input-group {
+    display: flex;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.lang-selector {
+    background: rgba(0,0,0,0.4);
+    color: var(--gold);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0 10px;
+    margin-right: 15px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+.lang-selector option {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+.input-group input {
+    flex: 1;
+    padding: 16px 24px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-family: var(--font-serif);
+}
+
+.input-group input:focus {
+    outline: none;
+}
+
+.input-group button {
+    margin-left: 10px;
+}
+
+/* Workflow Section */
+.workflow-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--gold);
+}
+
+.workflow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.agent-card {
+    background: rgba(20, 21, 26, 0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 0;
+    padding: 1.8rem;
+    transition: 0.4s ease;
+    position: relative;
+}
+
+.agent-card.active {
+    background: rgba(20, 21, 26, 0.9);
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.agent-card.completed {
+    border-color: rgba(52, 211, 153, 0.5);
+}
+
+.agent-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.agent-header h3 {
+    font-family: var(--font-title);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    transition: 0.4s;
+}
+
+.agent-card.active .status-indicator {
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold);
+    animation: pulse-dot 1.5s infinite;
+}
+
+.agent-card.completed .status-indicator {
+    background: var(--success);
+    box-shadow: 0 0 10px var(--success);
+}
+
+@keyframes pulse-dot {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.agent-role {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.agent-logs {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    background: #000;
+    padding: 12px;
+    border-radius: 4px;
+    color: var(--gold);
+    height: 44px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-left: 2px solid var(--gold);
+}
+
+.progress-bar-container {
+    height: 4px;
+    border-radius: 0;
+    overflow: hidden;
+    margin-top: 3rem;
+    padding: 0;
+    border: none;
+    background: rgba(255,255,255,0.05);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--gold);
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* Paper Output Section */
+#result-section {
+    margin-top: 5rem;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.paper-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+}
+
+.paper-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.paper-title-disp {
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.paper-title-disp::before {
+    content: '✓';
+    color: var(--success);
+}
+
+.paper-stats {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.paper-wrapper {
+    background: #e5e5e5; /* Represents the dark desk behind paper */
+    padding: 5rem 2rem;
+    border-radius: 8px;
+    box-shadow: inset 0 10px 30px rgba(0,0,0,0.5);
+    /* For 10 pages, we make a tall wrapper */
+}
+
+/* A4 Paper Styling */
+.paper-content {
+    background: var(--bg-paper);
+    color: var(--text-paper);
+    /* A4 proportions width to height is ~ 1 : 1.414 */
+    width: 100%;
+    max-width: 210mm; /* standard A4 width */
+    margin: 0 auto;
+    padding: 25mm 25mm; /* standard margins */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    
+    font-family: var(--font-serif);
+    font-size: 11pt; /* standard academic font size */
+    line-height: 2; /* True double spacing */
+    text-align: justify;
+    
+    /* 10 Pages Simulation - just a long continuous page in digital format */
+    min-height: calc(297mm * 10); /* 10 pages approx height visually */
+}
+
+.paper-content h1 {
+    font-family: var(--font-sans);
+    font-size: 16pt;
+    text-align: center;
+    margin-bottom: 12pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.paper-content .author-info {
+    text-align: center;
+    margin-bottom: 40pt;
+    font-family: var(--font-sans);
+    font-size: 11pt;
+}
+
+.paper-content .abstract-section {
+    margin: 0 10% 40pt 10%;
+    font-size: 10pt;
+}
+
+.paper-content .abstract-title {
+    text-align: center;
+    font-weight: bold;
+    font-style: normal;
+    margin-bottom: 10pt;
+}
+
+.paper-content h2 {
+    font-family: var(--font-sans);
+    font-size: 12pt;
+    font-weight: bold;
+    margin-top: 30pt;
+    margin-bottom: 10pt;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.paper-content h3 {
+    font-family: var(--font-sans);
+    font-size: 11pt;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 20pt;
+    margin-bottom: 10pt;
+}
+
+.paper-content p {
+    text-indent: 0.5in; /* Academic standard first line indent */
+    margin-bottom: 0;
+}
+
+/* Page break simulation logic */
+.page-break {
+    display: block;
+    width: 100%;
+    height: 50mm; /* Gap between virtual pages */
+    margin: 25mm -25mm; 
+    /* The trick is to break the visual continuity inside the padding */
+    border-top: 1px solid #ccc;
+    background: #e5e5e5;
+    box-shadow: inset 0 5px 10px rgba(0,0,0,0.1), 0 -5px 10px rgba(0,0,0,0.05);
+}
+
+/* First page doesn't need top page break */
+.paper-content > *:first-child,
+.paper-content p {
+    position: relative;
+    z-index: 2;
+}
+
+.citation-inline {
+    font-family: var(--font-sans);
+    font-size: 10.5pt;
+    color: #333;
+}
+
+.references-section {
+    margin-top: 40pt;
+    page-break-before: always;
+}
+
+.paper-content .biblio-item {
+    text-indent: -0.5in;
+    padding-left: 0.5in;
+    margin-bottom: 12pt;
+    line-height: 1.5;
+    font-family: var(--font-sans);
+    font-size: 10pt;
+}
+
+/* Custom Scrollbar for the window */
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-base); 
+}
+::-webkit-scrollbar-thumb {
+    background: var(--gold); 
+    border: 3px solid var(--bg-base);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-hover); 
+}
