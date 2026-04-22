@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('export-btn');
     
     let globalMarkdownPaper = ''; // Stores the raw markdown for export
-    // Injected AI Key (Locally configured via admin)
-    const API_KEY = "AIzaSyCN3kLAX32M-_ybkmBtEiQyk_AEDM_YfUg";
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+    // API Key (Locally configured via admin login)
+    let API_KEY = sessionStorage.getItem('balancer_api_key') || '';
+    const getApiUrl = () => `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
     // Theological Agents Configuration
     const agents = {
@@ -63,10 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const user = document.getElementById('username').value;
         const pass = document.getElementById('password').value;
+        const apiKey = document.getElementById('api-key').value;
         
         // Admin credentials specified by user
         if (user === 'samuelhyun' && pass === '123jesus') {
             sessionStorage.setItem('balancer_auth', 'true');
+            if (apiKey) {
+                sessionStorage.setItem('balancer_api_key', apiKey);
+                API_KEY = apiKey;
+            }
             checkAuth();
             document.getElementById('password').value = '';
             loginError.textContent = '';
@@ -78,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout
     logoutBtn.addEventListener('click', () => {
         sessionStorage.removeItem('balancer_auth');
+        sessionStorage.removeItem('balancer_api_key');
+        API_KEY = '';
         checkAuth();
         resetWorkflow();
     });
@@ -86,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function callGeminiAPI(prompt, logEl) {
         logEl.textContent = '> Generating content via Gemini API... (This may take a while)';
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(getApiUrl(), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
